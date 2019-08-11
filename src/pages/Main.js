@@ -69,7 +69,7 @@ export default function Main({ navigation }) {
       ))
     )}
     </View>
-
+    {users.length > 0 && (
     <View style={styles.buttonsContainers}>
       <TouchableOpacity onPress={handleDislike}>
         <Image style={styles.button} source={dislike}/>
@@ -78,6 +78,7 @@ export default function Main({ navigation }) {
         <Image style={styles.button} source={like}/>
       </TouchableOpacity>
       </View>
+    ) }
     </SafeAreaView>
     );
 }
