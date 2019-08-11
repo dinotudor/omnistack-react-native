@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import AsyncStorage from '@react-native-community/async-storage';
 import { View, Text, SafeAreaView, Image, StyleSheet, TouchableOpacity } from 'react-native';
 
 import api from './../services/api'
@@ -26,24 +27,33 @@ export default function Main({ navigation }) {
     loadUsers();
   }, [id]);
 
-  async function handleLike(id) {
-    await api.post(`/devs/${id}/likes`, null, {
+  async function handleLike() {
+    const [user, ...rest] = users; // takes users 0 index for the fisrt variable and the others to ...rest
+    await api.post(`/devs/${user._id}/likes`, null, {
       headers: { user: id }
     })
-    setUsers(users.filter(user => user._id !== id ));
+    setUsers(rest);
   }
 
-  async function handleDislike(id) {
-    await api.post(`/devs/${id}/dislikes`, null, {
+  async function handleDislike() {
+    const [user, ...rest] = users; // takes users 0 index for the fisrt variable and the others to ...rest
+    await api.post(`/devs/${user._id}/dislikes`, null, {
       headers: { user: id }
     })
-    setUsers(users.filter(user => user._id !== id ));
+    setUsers(rest);
+  }
+
+  async function handleLogout() {
+    await AsyncStorage.clear();
+    navigation.navigate('Login')
   }
 
 
   return (
     <SafeAreaView style={styles.container}>
-      <Image style={styles.logo} source={logo}/>
+      <TouchableOpacity onPress={handleLogout}>
+        <Image style={styles.logo} source={logo}/>
+      </TouchableOpacity>
       <View style={styles.cardsContainer}>
       { users.length === 0
       ? <Text style={styles.empty}>Acabou</Text>
@@ -61,10 +71,10 @@ export default function Main({ navigation }) {
     </View>
 
     <View style={styles.buttonsContainers}>
-      <TouchableOpacity>
+      <TouchableOpacity onPress={handleDislike}>
         <Image style={styles.button} source={dislike}/>
       </TouchableOpacity>
-      <TouchableOpacity>
+      <TouchableOpacity onPress={handleLike}>
         <Image style={styles.button} source={like}/>
       </TouchableOpacity>
       </View>
@@ -83,7 +93,10 @@ const styles = StyleSheet.create({
     marginTop: 30,
   },
   empty: {
-
+    alignSelf: 'center',
+    color: '#999',
+    fontSize: 24,
+    fontWeight: 'bold',
   },
 
   cardsContainer: {
