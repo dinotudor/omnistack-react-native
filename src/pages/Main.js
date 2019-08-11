@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import io from 'socket.io-client';
 import AsyncStorage from '@react-native-community/async-storage';
 import { View, Text, SafeAreaView, Image, StyleSheet, TouchableOpacity } from 'react-native';
 
@@ -7,10 +8,12 @@ import api from './../services/api'
 import logo from './../assets/logo.png';
 import dislike from './../assets/dislike.png';
 import like from './../assets/like.png';
+import itsamatch from './../assets/itsamatch.png';
 
 export default function Main({ navigation }) {
   const id = navigation.getParam('user');
   const [users, setUsers] = useState([]);
+  const [matchDev, setMatchDev] = useState(true);
 
   console.log(id)
 
@@ -26,6 +29,17 @@ export default function Main({ navigation }) {
     }
     loadUsers();
   }, [id]);
+
+  useEffect(() => {
+    const socket = io('http://localhost:3333', {
+      query: { user: id }
+    });
+    socket.on('match', dev => {
+      setMatchDev(dev);
+    })
+
+  }, [id]);
+
 
   async function handleLike() {
     const [user, ...rest] = users; // takes users 0 index for the fisrt variable and the others to ...rest
@@ -69,6 +83,7 @@ export default function Main({ navigation }) {
       ))
     )}
     </View>
+
     {users.length > 0 && (
     <View style={styles.buttonsContainers}>
       <TouchableOpacity onPress={handleDislike}>
@@ -77,6 +92,20 @@ export default function Main({ navigation }) {
       <TouchableOpacity onPress={handleLike}>
         <Image style={styles.button} source={like}/>
       </TouchableOpacity>
+      </View>
+    ) }
+    { matchDev && (
+      <View style={styles.matchContainer}>
+
+        <Image style={styles.matchImage} source={itsamatch} />
+        <Image style={styles.matchAvatar} source={{uri: "https://avatars2.githubusercontent.com/u/31296766?v=4"}} />
+
+        <Text style={styles.matchName}>Dino Tudor</Text>
+        <Text style={styles.matchBio}>Bio</Text>
+
+        <TouchableOpacity onPress={() => setMatchDev(null)}>
+          <Text style={styles.closeMatch}>fechar</Text>
+        </TouchableOpacity>
       </View>
     ) }
     </SafeAreaView>
@@ -158,5 +187,26 @@ const styles = StyleSheet.create({
         height: 2,
       }
     },
-
+    matchContainer: {
+      ...StyleSheet.absoluteFillObject,
+      backgroundColor: 'rgba(0, 0, 0, 0.8 )',
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+    matchAvatar: {
+      height: 160,
+      width: 160,
+      borderRadius: 80,
+      borderWidth: 5,
+      borderColor: '#FFF',
+    },
+    matchName: {
+      fontSize: 26,
+      fontWeight: 'bold',
+      color: '#FFF'
+    },
+    matchImage: {
+      height: 60,
+      resizeMode: 'contain',
+    },
 })
