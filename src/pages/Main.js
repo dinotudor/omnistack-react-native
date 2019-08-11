@@ -13,7 +13,7 @@ import itsamatch from './../assets/itsamatch.png';
 export default function Main({ navigation }) {
   const id = navigation.getParam('user');
   const [users, setUsers] = useState([]);
-  const [matchDev, setMatchDev] = useState(true);
+  const [matchDev, setMatchDev] = useState(null);
 
   console.log(id)
 
@@ -98,13 +98,13 @@ export default function Main({ navigation }) {
       <View style={styles.matchContainer}>
 
         <Image style={styles.matchImage} source={itsamatch} />
-        <Image style={styles.matchAvatar} source={{uri: "https://avatars2.githubusercontent.com/u/31296766?v=4"}} />
+        <Image style={styles.matchAvatar} source={{uri: matchDev.avatar}} />
 
-        <Text style={styles.matchName}>Dino Tudor</Text>
-        <Text style={styles.matchBio}>Bio</Text>
+        <Text style={styles.matchName}>{matchDev.name}</Text>
+        <Text style={styles.matchBio}>{matchDev.bio}</Text>
 
         <TouchableOpacity onPress={() => setMatchDev(null)}>
-          <Text style={styles.closeMatch}>fechar</Text>
+          <Text style={styles.closeMatch}>Fechar</Text>
         </TouchableOpacity>
       </View>
     ) }
@@ -208,5 +208,20 @@ const styles = StyleSheet.create({
     matchImage: {
       height: 60,
       resizeMode: 'contain',
+    },
+    matchBio: {
+      marginTop: 10,
+      fontSize: 16,
+      color: 'rgba(255, 255, 255, 0.8)',
+      lineHeight: 24,
+      textAlign: 'center',
+      paddingHorizontal: 30
+    },
+    closeMatch: {
+      fontSize: 16,
+      color: 'rgba(255, 255, 255, 0.8)',
+      textAlign: 'center',
+      marginTop: 30,
+      fontWeight: 'bold',
     },
 })
