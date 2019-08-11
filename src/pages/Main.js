@@ -11,7 +11,7 @@ export default function Main() {
       <View style={styles.cardsContainer}>
         <View style={styles.card}>
           <Image style={styles.avatar} source={{ uri: 'https://avatars2.githubusercontent.com/u/31296766?v=4'}}/>
-          <View>
+          <View style={styles.footer}>
             <Text style={styles.name}>Dino Tudor</Text>
             <Text style={styles.bio}>Bio </Text>
           </View>
@@ -19,7 +19,7 @@ export default function Main() {
 
         <View style={styles.card}>
           <Image style={styles.avatar} source={{ uri: 'https://avatars2.githubusercontent.com/u/31296766?v=4'}}/>
-          <View>
+          <View style={styles.footer}>
             <Text style={styles.name}>Dino Tudor</Text>
             <Text style={styles.bio}>Bio </Text>
           </View>
@@ -27,7 +27,7 @@ export default function Main() {
 
         <View style={styles.card}>
           <Image style={styles.avatar} source={{ uri: 'https://avatars2.githubusercontent.com/u/31296766?v=4'}}/>
-          <View>
+          <View style={styles.footer}>
             <Text style={styles.name}>Dino Tudor</Text>
             <Text style={styles.bio}>Bio </Text>
           </View>
@@ -70,4 +70,31 @@ const styles = StyleSheet.create({
       flex: 1,
       height: 300,
     },
+    footer: {
+      backgroundColor: '#FFF',
+      paddingHorizontal: 20,
+      paddingVertical: 15,
+    },
+    name: {
+      fontSize: 16,
+      fontWeight: 'bold',
+      color: '#333',
+    },
+    bio: {
+      fontSize: 14,
+      color: '#999',
+      marginTop: 5,
+      lineHeight: 20
+    }
 })
+
+/*
+
+    bio: {
+      fontSize: 14,
+      color: #999,
+      marginTop: 5,
+      lineHeight: 20
+    }
+
+*/
