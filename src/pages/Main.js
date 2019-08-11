@@ -1,41 +1,34 @@
 import React from 'react';
-import { View, Text, SafeAreaView, Image, StyleSheet } from 'react-native';
+import { View, Text, SafeAreaView, Image, StyleSheet, TouchableOpacity } from 'react-native';
 
 import logo from './../assets/logo.png';
+import dislike from './../assets/dislike.png';
+import like from './../assets/like.png';
 
 export default function Main() {
   return (
     <SafeAreaView style={styles.container}>
-      <Image source={logo}/>
+      <Image style={styles.logo} source={logo}/>
 
-      <View style={styles.cardsContainer}>
+      <View style={[styles.cardsContainer, { zIndex: 3 } ]}>
         <View style={styles.card}>
           <Image style={styles.avatar} source={{ uri: 'https://avatars2.githubusercontent.com/u/31296766?v=4'}}/>
           <View style={styles.footer}>
             <Text style={styles.name}>Dino Tudor</Text>
-            <Text style={styles.bio}>Bio </Text>
-          </View>
-        </View>
-
-        <View style={styles.card}>
-          <Image style={styles.avatar} source={{ uri: 'https://avatars2.githubusercontent.com/u/31296766?v=4'}}/>
-          <View style={styles.footer}>
-            <Text style={styles.name}>Dino Tudor</Text>
-            <Text style={styles.bio}>Bio </Text>
-          </View>
-        </View>
-
-        <View style={styles.card}>
-          <Image style={styles.avatar} source={{ uri: 'https://avatars2.githubusercontent.com/u/31296766?v=4'}}/>
-          <View style={styles.footer}>
-            <Text style={styles.name}>Dino Tudor</Text>
-            <Text style={styles.bio}>Bio </Text>
+            <Text style={styles.bio} numberOfLines={3}>Bio </Text>
           </View>
         </View>
 
       </View>
-      <View />
 
+      <View style={styles.buttonsContainers}>
+        <TouchableOpacity>
+          <Image style={styles.button} source={dislike}/>
+        </TouchableOpacity>
+        <TouchableOpacity>
+          <Image style={styles.button} source={like}/>
+        </TouchableOpacity>
+      </View>
     </SafeAreaView>
     );
 }
@@ -46,6 +39,9 @@ const styles = StyleSheet.create({
     backgroundColor: '#f5f5f5',
     alignItems: 'center',
     justifyContent: 'space-between',
+  },
+  logo: {
+    marginTop: 30,
   },
 
   cardsContainer: {
@@ -85,16 +81,26 @@ const styles = StyleSheet.create({
       color: '#999',
       marginTop: 5,
       lineHeight: 20
-    }
+    },
+    buttonsContainers: {
+      flexDirection: 'row',
+      marginBottom: 30,
+    },
+    button: {
+      width: 50,
+      height: 50,
+      borderRadius: 25,
+      backgroundColor: '#FFF',
+      justifyContent: 'center',
+      alignItems: 'center',
+      marginHorizontal: 20,
+      shadowColor: '#FFF',
+      shadowOpacity: 0.05,
+      shadowRadius: 2,
+      shadowOffset: {
+        width: 0,
+        height: 2,
+      }
+    },
+
 })
-
-/*
-
-    bio: {
-      fontSize: 14,
-      color: #999,
-      marginTop: 5,
-      lineHeight: 20
-    }
-
-*/
