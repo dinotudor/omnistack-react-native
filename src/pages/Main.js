@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, SafeAreaView, Image, StyleSheet, TouchableOpacity } from 'react-native';
+
+import api from './../services/api'
 
 import logo from './../assets/logo.png';
 import dislike from './../assets/dislike.png';
